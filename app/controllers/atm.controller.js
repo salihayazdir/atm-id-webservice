@@ -1,4 +1,4 @@
-const Atm = require("../models/atm.model.js");
+const AtmModel = require("../models/atm.model.js");
 
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
@@ -9,12 +9,12 @@ exports.create = (req, res) => {
       });
     }
     // Create an ATM
-    const atm = new Atm({
+    const atm = new AtmAtmModel({
         MemberNo: req.body.MemberNo,
         AtmReferenceCode: req.body.AtmReferenceCode,
     });
     // Save ATM in the database
-    Atm.create(atm, (err, data) => {
+    AtmAtmModel.create(atm, (err, data) => {
       if (err)
         res.status(500).send({
           message:
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 // Retrieve all Atm's from the database (with condition).
 exports.findAll = (req, res) => {
     const AtmReferenceCode = req.query.AtmReferenceCode;
-    Atm.getAll(AtmReferenceCode, (err, data) => {
+    AtmAtmModel.getAll(AtmReferenceCode, (err, data) => {
       if (err)
         res.status(500).send({
           message:
@@ -37,7 +37,7 @@ exports.findAll = (req, res) => {
     });
   };
   exports.findAllPublished = (req, res) => {
-    Atm.getAllPublished((err, data) => {
+    AtmAtmModel.getAllPublished((err, data) => {
       if (err)
         res.status(500).send({
           message:
@@ -49,7 +49,7 @@ exports.findAll = (req, res) => {
 
 // Delete all Atm's from the database.
 exports.deleteAll = (req, res) => {
-    Atm.removeAll((err, data) => {
+    AtmAtmModel.removeAll((err, data) => {
       if (err)
         res.status(500).send({
           message:

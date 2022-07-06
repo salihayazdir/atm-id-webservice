@@ -1,12 +1,12 @@
 const sql = require("./db.js");
 
 // constructor
-const Atm = function(atm) {
+const AtmModel = function(atm) {
   this.MemberNo = atm.MemberNo;
   this.AtmReferenceCode = atm.AtmReferenceCode;
 };
 
-Atm.create = (newAtmUnit, result) => {
+AtmModel.create = (newAtmUnit, result) => {
   sql.query("INSERT INTO atmunits SET ?", newAtmUnit, (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -18,7 +18,7 @@ Atm.create = (newAtmUnit, result) => {
   });
 };
 
-Atm.getAll = (AtmReferenceCode, result) => {
+AtmModel.getAll = (AtmReferenceCode, result) => {
   let query = "SELECT * FROM atmunits";
   if (AtmReferenceCode) {
     query += ` WHERE AtmReferenceCode LIKE '%${AtmReferenceCode}%'`;
@@ -34,7 +34,7 @@ Atm.getAll = (AtmReferenceCode, result) => {
   });
 };
 
-Atm.removeAll = result => {
+AtmModel.removeAll = result => {
   sql.query("DELETE FROM atmunits", (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -46,4 +46,4 @@ Atm.removeAll = result => {
   });
 };
 
-module.exports = Atm;
+module.exports = AtmModel;
