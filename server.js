@@ -150,7 +150,7 @@ app.get("/", (req, res) => {
 //     });
 //   };  
 
-//   var router = require("express").Router();
+  var router = require("express").Router();
 //   app.use('/api/atms', router);
 
 //   router.post("/", create);
