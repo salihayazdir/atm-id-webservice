@@ -10,8 +10,6 @@ const pool = new Pool({
   }
 });
 
-app.use('/db')
-
 router.get('/', async (req, res) => {
     try {
       const client = await pool.connect();
@@ -25,4 +23,4 @@ router.get('/', async (req, res) => {
     }
   });
   
-modeule.exports = router
+module.exports = router
