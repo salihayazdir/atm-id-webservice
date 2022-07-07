@@ -23,4 +23,4 @@ router.get('/', async (req, res) => {
     }
   });
   
-modeule.exports = router
+module.exports = router
