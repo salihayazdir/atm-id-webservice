@@ -1,6 +1,6 @@
-const { application } = require('express');
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const app = express();
+const router = express.Router();
 
 const { Pool } = require('pg');
 const pool = new Pool({
