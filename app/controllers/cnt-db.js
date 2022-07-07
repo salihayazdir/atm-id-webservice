@@ -1,16 +1,6 @@
-const express = require('express');
-const app = express();
-const router = express.Router();
+const pool = require('../pool')
 
-const { Pool } = require('pg');
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-router.get('/', async (req, res) => {
+const checkdb = async (req, res) => {
     try {
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM test_table');
@@ -21,6 +11,6 @@ router.get('/', async (req, res) => {
       console.error(err);
       res.send("Error " + err);
     }
-  });
-  
-module.exports = router
+  }
+
+module.exports = checkdb

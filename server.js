@@ -2,13 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-
-
-// var corsOptions = {
-//   origin: "http://localhost:8081"
-// };
-
+// var corsOptions = { origin: "http://localhost:8081" };
 // app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -16,31 +12,13 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome" });
 });
 
-const db = require('./routes/db-route')
+const db = require('./app/routes/route-db')
 app.use('/db', db)
 
-// const mysql = require("mysql2");
-
-// const dbConfig = {
-//   HOST: "localhost",
-//   USER: "root",
-//   PASSWORD: "123321abC!",
-//   DB: "ATM_DB"
-// };
-
-// // Create a connection to the database
-// const sql = mysql.createConnection({
-//   host: dbConfig.HOST,
-//   user: dbConfig.USER,
-//   password: dbConfig.PASSWORD,
-//   database: dbConfig.DB,
-// });
-
-// // open the MySQL connection
-// sql.connect(error => {
-//   if (error) throw error;
-//   console.log("Successfully connected to the database.");
-// });
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
 
 
 // // constructor
@@ -153,8 +131,3 @@ app.use('/db', db)
 //   router.get("/", findAll);
 //   router.delete("/", deleteAll);
 
-
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
