@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 const db = require('./routes/db-route')
-app.use('./db', db)
+app.use('/db', db)
 
 // const mysql = require("mysql2");
 
