@@ -1,9 +1,12 @@
 const express = require('express');
-const app = express();
 const router = express.Router();
 
-const { atmAddNew } = require('../controllers/cnt-atm');
+const { listAll, getAtm, newAtm, editAtm, deleteAtm } = require('../controllers/cnt-atm');
 
-router.post('/', atmAddNew);
+router.get('/', listAll);
+router.get('/:id', getAtm);
+router.post('/', newAtm);
+router.put('/:id', editAtm);
+router.delete('/:id', deleteAtm);
 
 module.exports = router
