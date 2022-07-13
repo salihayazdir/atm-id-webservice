@@ -36,7 +36,13 @@ const getAtm = async (req, res) => {
 }
       
 const newAtm = async (req, res) => {
-  const { memberno, atmreferencecode, } = req.body;
+  const { 
+    memberno, atmreferencecode, atmname, licensetag, adress,
+    district, neighborhood, servicedependency, restrictedatm,
+    airportlocated, malllocated, universitylocated, depositflag, withdrawflag,
+    terminalcoinoperator, nfcflag, biometryflag, visuallyimpairedflag, orthopedicdisabledflag,
+    atmage, geocodelatitude, geocodelongitude
+  } = req.body;
 
   try {
     const client = await db.connect();
@@ -49,8 +55,21 @@ const newAtm = async (req, res) => {
             res.send('Hata. Belirtilen referans kodu ile oluşturulmuş ATM kaydı bulunmaktadır.');
             res.end();
           } else {
-            client.query('INSERT INTO atmunits (memberno, atmreferencecode) VALUES ($1, $2)',
-            [memberno, atmreferencecode],
+            client.query(`
+              INSERT INTO atmunits
+              (memberno, atmreferencecode, atmname, licensetag, adress,
+                district, neighborhood, servicedependency, restrictedatm, airportlocated,
+                malllocated, universitylocated, depositflag, withdrawflag, terminalcoinoperator,
+                nfcflag, biometryflag, visuallyimpairedflag, orthopedicdisabledflag, atmage,
+                geocodelatitude, geocodelongitude)
+              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)`,
+            [
+              memberno, atmreferencecode, atmname, licensetag, adress,
+              district, neighborhood, servicedependency, restrictedatm, airportlocated,
+              malllocated, universitylocated, depositflag, withdrawflag, terminalcoinoperator,
+              nfcflag, biometryflag, visuallyimpairedflag, orthopedicdisabledflag, atmage,
+              geocodelatitude, geocodelongitude
+            ],
             (error, results) => {
               try {
                 if (error) throw error;
@@ -111,7 +130,13 @@ const deleteAtm = async (req, res) => {
 
 const editAtm = async (req, res) => {
   const id = parseInt(req.params.id);
-  const { atmreferencecode } = req.body;
+  const { 
+    atmreferencecode, atmname, licensetag, adress, district,
+    neighborhood, servicedependency, restrictedatm, airportlocated,
+    malllocated, universitylocated, depositflag, withdrawflag, terminalcoinoperator, 
+    nfcflag, biometryflag, visuallyimpairedflag, orthopedicdisabledflag, atmage,
+    geocodelatitude, geocodelongitude
+  } = req.body;
   const client = await db.connect();
   try {
     client.query('SELECT * FROM atmunits WHERE globalatmid = $1', [id], (error, results) => {
@@ -120,7 +145,22 @@ const editAtm = async (req, res) => {
         if (!results.rows.length) {
           res.send('Hata. ATM Bulunamadı')
         } else {
-          client.query('UPDATE atmunits SET atmreferencecode = $2 WHERE globalatmid = $1', [id, atmreferencecode], (error, results) => {
+          client.query(`
+            UPDATE atmunits SET 
+              atmreferencecode = $2, atmname = $3, licensetag = $4, adress = $5,
+              district = $6, neighborhood = $7, servicedependency = $8, restrictedatm = $9, airportlocated = $10,
+              malllocated = $11, universitylocated = $12, depositflag = $13, withdrawflag = $14, terminalcoinoperator = $15,
+              nfcflag = $16, biometryflag = $17, visuallyimpairedflag = $18, orthopedicdisabledflag = $19, atmage = $20,
+              geocodelatitude = $21, geocodelongitude = $22
+            WHERE globalatmid = $1`,
+            [
+              id, atmreferencecode, atmname, licensetag, adress,
+              district, neighborhood, servicedependency, restrictedatm, airportlocated,
+              malllocated, universitylocated, depositflag, withdrawflag, terminalcoinoperator,
+              nfcflag, biometryflag, visuallyimpairedflag, orthopedicdisabledflag, atmage,
+              geocodelatitude, geocodelongitude
+            ],
+            (error, results) => {
             try {
               if (error) throw error;
               res.send(`${id} ID'li ATM başarıyla güncellendi.`)
