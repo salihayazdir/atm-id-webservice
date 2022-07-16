@@ -52,7 +52,7 @@ const newAtm = async (req, res) => {
         try { 
           if (error) throw error;
           if (results.rows.length) {
-            res.send('Hata. Belirtilen referans kodu ile oluşturulmuş ATM kaydı bulunmaktadır.');
+            res.status(450).send('Hata. Belirtilen referans kodu ile oluşturulmuş ATM kaydı bulunmaktadır.');
             res.end();
           } else {
             client.query(`
