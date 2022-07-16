@@ -52,7 +52,7 @@ const newAtm = async (req, res) => {
         try { 
           if (error) throw error;
           if (results.rows.length) {
-            res.status(450).send('Hata. Belirtilen referans kodu ile oluşturulmuş ATM kaydı bulunmaktadır.');
+            res.status(455).send('Hata. Belirtilen referans kodu ile oluşturulmuş ATM kaydı bulunmaktadır.');
             res.end();
           } else {
             client.query(`
@@ -73,7 +73,7 @@ const newAtm = async (req, res) => {
             (error, results) => {
               try {
                 if (error) throw error;
-                res.send('ATM Kaydı Oluşturuldu.');
+                res.status(251).send('ATM Kaydı Oluşturuldu.');
                 res.end();}
               catch (err) {
                 console.error(err);
@@ -103,12 +103,12 @@ const deleteAtm = async (req, res) => {
       try {
         if (error) throw error;
         if (!results.rows.length) {
-          res.send('Hata. ATM Bulunamadı.');
+          res.status(451).send('Hata. ATM Bulunamadı.');
         } else {
           client.query('DELETE FROM atmunits WHERE globalatmid = $1', [id], (error, results) => {
             try {
               if (error) throw error;
-              res.send(`${id} ID'li ATM kaydı silindi.`);
+              res.status(250).send(`${id} ID'li ATM kaydı silindi.`);
             }
             catch (err) {
               console.error(err);
@@ -143,7 +143,7 @@ const editAtm = async (req, res) => {
       try {
         if (error) throw error;
         if (!results.rows.length) {
-          res.send('Hata. ATM Bulunamadı')
+          res.status(451).send('Hata. ATM Bulunamadı')
         } else {
           client.query(`
             UPDATE atmunits SET 
