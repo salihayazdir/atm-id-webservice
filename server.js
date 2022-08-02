@@ -1,5 +1,9 @@
-const express = require("express");
-const cors = require("cors");
+import Express from "express";
+import cors from 'cors'
+import {router as atm} from './app/routes/route-atm.js';
+import {router as auth} from './app/routes/route-auth.js';
+
+const express = Express
 const app = express();
 
 // var corsOptions = { origin: false };
@@ -11,9 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ message: "Welcome" });
 });
- 
-const atm = require('./app/routes/route-atm.js')
+
 app.use('/atm', atm)
+app.use('/auth', auth)
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

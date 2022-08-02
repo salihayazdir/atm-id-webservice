@@ -1,7 +1,9 @@
-const db = require('../config/db')
+import { pool } from '../config/db.js'
+const db = pool
   
 const listAll = async (req, res) => {
-  const { atmreferencecode, atmname, licensetag, adress,
+  const { limit, offset,
+    globalatmid, atmreferencecode, atmname, licensetag, adress,
     district, neighborhood, servicedependency, restrictedatm,
     airportlocated, malllocated, universitylocated, depositflag, withdrawflag,
     terminalcoinoperator, nfcflag, biometryflag, visuallyimpairedflag, orthopedicdisabledflag,
@@ -10,6 +12,7 @@ const listAll = async (req, res) => {
   const conditions = [];
   const values = [];
 
+  if (globalatmid) { conditions.push(`globalatmid`); values.push(globalatmid); }
   if (atmreferencecode) { conditions.push(`atmreferencecode`); values.push(atmreferencecode); }
   if (atmname) { conditions.push(`atmname`); values.push(atmname); }
   if (licensetag) { conditions.push(`licensetag`); values.push(licensetag); }
@@ -39,7 +42,7 @@ const listAll = async (req, res) => {
   try {
     const client = await db.connect();
     client.query(
-      `SELECT * FROM atmunits ${(conditions.length) ? (`WHERE ${paramQuery.join('')}`) : ''}`,
+      `SELECT * FROM atmunits ${(conditions.length) ? (`WHERE ${paramQuery.join('')}`) : ''}order by globalatmid desc${(limit) ? (` limit ${limit}`) : ''}${(offset) ? (` offset ${offset}`) : ''}`,
       values, 
       (error, results) => {
         try {
@@ -50,7 +53,6 @@ const listAll = async (req, res) => {
           res.send("Error " + err);
         }
       });
-      
     client.release();
   } 
   catch (err) {
@@ -208,7 +210,7 @@ const client = await db.connect();
             if (error) throw error;
             res.send(`${id} ID'li ATM başarıyla güncellendi.`)
           }
-          catch (error) {
+          catch (err) {
             console.error(err);
             res.send("Error " + err)
           }
@@ -222,10 +224,10 @@ const client = await db.connect();
   })
 }
 
-module.exports = {
+export {
   listAll,
   newAtm,
   getAtm,
   editAtm,
-  deleteAtm,
+  deleteAtm
 }
