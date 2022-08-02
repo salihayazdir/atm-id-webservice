@@ -14,15 +14,13 @@ const Queries = {
     Users: {
       Create: async (email) =>
         await runQuery(
-          // "INSERT INTO users (email) VALUES ($1, $2)",
           "INSERT INTO users (email) VALUES ($1)",
           email
         ),
       Get: {
         ByEmail: async (email) =>
           await runQuery(
-            // "SELECT id, name, email, active FROM users WHERE email = $1",
-            "SELECT id, email FROM users WHERE email = $1",
+            "SELECT id, email, name, memberno FROM users WHERE email = $1",
             email
           ),
       },
