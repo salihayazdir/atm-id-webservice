@@ -112,7 +112,7 @@ const postToken = async (req, res) => {
       })
 
     } catch (err) {
-      return res.json( {success:false, message: `Kod doğrulanamadı.` } )
+      return res.json( {success:false, message: `Kod doğrulanamadı. ${err}` } )
     }
 }
 
