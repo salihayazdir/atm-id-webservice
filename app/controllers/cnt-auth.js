@@ -104,11 +104,16 @@ const postToken = async (req, res) => {
       return res.json({
         success: true,
         message: 'Kod doğrulandı.Token Oluşturuldu.',
-        user_id: user.id ,
         token_type: 'Bearer',
         access_token: token,
         scope: 'atm_read atm_write',
         expires_in: '3600',
+        user: {
+          id: user.id,
+          memberno: user.memberno,
+          email: user.email,
+          name: user.name,
+        }
       })
 
     } catch (err) {
