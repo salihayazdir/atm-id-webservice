@@ -65,7 +65,10 @@ const postLogin = async (req, res) => {
         success: true,
         message: `Tek kullanımlık doğrulama kodu ${email} adresine gönderildi. ${code}` ,
         user: {
-          id: user.id
+          id: user.id,
+          memberno: user.memberno,
+          email: user.email,
+          name: user.name,
         }
       })
     } catch (err) {
