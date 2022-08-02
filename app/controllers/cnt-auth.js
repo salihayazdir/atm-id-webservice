@@ -98,7 +98,7 @@ const postToken = async (req, res) => {
       if (Date.parse(otp.created_at) + 1000 * 60 * 5 < Date.now()) throw "Tek kullanımlık şifrenizin süresi dolmuştur.";
       
       const match = bcrypt.compareSync(code, otp.code);
-      if (!match) throw "Error with code";
+      if (!match) throw "Kod doğrulanamadı.";
     
       await Queries.Otp.Delete.ByUserId(user.id);
 
@@ -128,7 +128,6 @@ const postToken = async (req, res) => {
 const validateToken = (req, res, next) => {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
-  
   try {
     if (!token) throw true;
     const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
@@ -137,6 +136,7 @@ const validateToken = (req, res, next) => {
     Object.keys(data).forEach((key) => {
     req.user[key] = data[key];
     });
+    res.locals.data = data
     return next();
   } catch (err) {
       return res.json({success: false, message: `Token doğrulanamadı. ${err}`});
