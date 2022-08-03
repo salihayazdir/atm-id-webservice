@@ -48,7 +48,7 @@ const listAll = async (req, res) => {
       (error, results) => {
         try {
           if (error) throw error;
-          res.json( results.rows );
+          res.json( {rows: results.rows, results: results} );
         } catch (err) {
           console.error(err);
           res.send("Error " + err);
@@ -61,7 +61,6 @@ const listAll = async (req, res) => {
     res.send("Error " + err);
   }
 }
-
 
 const getAtm = async (req, res) => {
   const id = parseInt(req.params.id);
