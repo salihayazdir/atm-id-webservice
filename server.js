@@ -2,9 +2,11 @@ import Express from "express";
 import cors from 'cors'
 import {router as atm} from './app/routes/route-atm.js';
 import {router as auth} from './app/routes/route-auth.js';
+import { getMembers } from "./app/controllers/cnt-atm.js";
 
 const express = Express
 const app = express();
+const router = express.Router();
 
 // var corsOptions = { origin: false };
 app.use(cors());
@@ -18,6 +20,8 @@ app.get("/", (req, res) => {
 
 app.use('/atm', atm)
 app.use('/auth', auth)
+
+router.get('/members', getMembers);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

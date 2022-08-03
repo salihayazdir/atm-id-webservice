@@ -130,7 +130,7 @@ const validateToken = (req, res, next) => {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
   try {
-    if (!token) throw true;
+    if (!token) throw 'Token bulunamadı.';
     const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
     if (!data.expirationDate || (Date.parse(data.expirationDate) < Date.now())) throw 'Token geçerliliğini yitirdi.';
     req.user = {};
