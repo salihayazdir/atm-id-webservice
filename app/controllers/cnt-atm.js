@@ -161,13 +161,13 @@ const deleteAtm = async (req, res) => {
         })
       } catch (err) {
         console.error(err);
-        res.json({success: false, message: `ATM kaydı silinemedi. ${err}`})
+        res.json({success: false, message: `Veritabanına bağlanılamadı. ${err}`})
       }
     })
     client.release();
   } catch (err) {
     console.error(err);
-    res.json({success: false, message: `ATM kaydı silinemedi. ${err}`})
+    res.json({success: false, message: `Veritabanına bağlanılamadı. ${err}`})
   }  
 }
 
@@ -220,31 +220,26 @@ const editAtm = async (req, res) => {
     })
 }
 
-// const checkMemberAuthorization = (req, res, next) => {
-//   console.log('----localdata-------' + JSON.stringify(res.locals.data))
-//   console.log('----req.usermemberno---------' + req.user.memberno)
-//   if (res.locals.memberno === req.body.memberno) return next();
-//   res.json({success: false, message: 'Yetkisiz işlem. Farklı banka.'})
-// }
+const getMembers = async (req, res) => {
+  try {
+    const client = await db.connect();
+    client.query('SELECT * FROM members', (error, results) => {
+      try {
+        if (error) throw error;
+        if (!results.rows.length) throw 'Banka kaydı bulunamadı.';
+        res.json({success: true, data: results.rows})
+      } catch (err) {
+        console.error(err);
+        res.json({success: false, message: `Bankalar listelenemedi. ${err}`})
+      }
+    })
+    client.release();
+  } catch (err) {
+    console.error(err);
+    res.json({success: false, message: `Veritabanına bağlanılamadı. ${err}`})
+  }  
+}
 
-// const validateToken = (req, res, next) => {
-//   const authHeader = req.headers['authorization']
-//   const token = authHeader && authHeader.split(' ')[1]
-  
-//   try {
-//     if (!token) throw true;
-//     const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
-//     if (!data.expirationDate || (Date.parse(data.expirationDate) < Date.now())) throw 'Token geçerliliğini yitirdi.';
-//     req.user = {};
-//     Object.keys(data).forEach((key) => {
-//     req.user[key] = data[key];
-//     });
-//     res.locals.data = data
-//     return next();
-//   } catch (err) {
-//       return res.json({success: false, message: `Token doğrulanamadı. ${err}`});
-//   }
-// };
 
 
 export {
@@ -253,4 +248,5 @@ export {
   getAtm,
   editAtm,
   deleteAtm,
+  getMembers,
 }

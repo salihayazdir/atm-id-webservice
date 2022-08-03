@@ -1,5 +1,5 @@
 import Express from "express";
-import { listAll, getAtm, newAtm, editAtm, deleteAtm } from '../controllers/cnt-atm.js';
+import { listAll, getAtm, newAtm, editAtm, deleteAtm, getMembers } from '../controllers/cnt-atm.js';
 import { validateToken } from '../controllers/cnt-auth.js';
 
 
@@ -11,5 +11,6 @@ router.get('/:id', validateToken, getAtm);
 router.post('/', validateToken, newAtm);
 router.put('/:id', validateToken, editAtm);
 router.delete('/:id', validateToken, deleteAtm);
+router.get('/members', getMembers);
 
 export { router }
