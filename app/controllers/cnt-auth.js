@@ -63,7 +63,8 @@ const postLogin = async (req, res) => {
 
       res.json({
         success: true,
-        message: `Tek kullanımlık doğrulama kodu ${email} adresine gönderildi. ${code}` ,
+        message: `Tek kullanımlık doğrulama kodu ${email} adresine gönderildi.` ,
+        code: code,
         user: {
           id: user.id,
           memberno: user.memberno,
