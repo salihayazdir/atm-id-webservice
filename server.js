@@ -6,7 +6,6 @@ import { getMembers } from "./app/controllers/cnt-atm.js";
 
 const express = Express
 const app = express();
-const router = express.Router();
 
 // var corsOptions = { origin: false };
 app.use(cors());
@@ -21,7 +20,7 @@ app.get("/", (req, res) => {
 app.use('/atm', atm)
 app.use('/auth', auth)
 
-router.get('/members', getMembers);
+app.get('/members', getMembers);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
