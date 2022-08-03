@@ -48,7 +48,7 @@ const listAll = async (req, res) => {
       (error, results) => {
         try {
           if (error) throw error;
-          res.json( {rows: results.rows, results: results} );
+          res.json( {success: true, results: results} );
         } catch (err) {
           console.error(err);
           res.send("Error " + err);
