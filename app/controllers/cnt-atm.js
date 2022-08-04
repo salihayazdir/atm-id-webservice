@@ -51,14 +51,14 @@ const listAll = async (req, res) => {
           res.json( {success: true, results: results} );
         } catch (err) {
           console.error(err);
-          res.send("Error " + err);
+          res.json({success: false, message: `Veri listelenemedi. ${err}`});
         }
       });
     client.release();
   } 
   catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    res.json({success: false, message: `${err}`});
   }
 }
 
@@ -77,7 +77,7 @@ const getAtm = async (req, res) => {
   } 
   catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    res.json({success: false, message: `${err}`});
   }  
 }
       
@@ -121,13 +121,13 @@ const newAtm = async (req, res) => {
               res.json({success: true, message: 'Atm kaydı oluşturuldu', data: results});
             } catch (err) {
               console.error(err);
-              res.json({success: false, message: `Atm kaydı oluşturulamadı. ${err}`});
+              res.json({success: false, message: `Atm kaydı oluşturulamadı. ${err}`, data: results});
             }
           })
         }
         catch (err) {
           console.error(err);
-          res.send("Error " + err);
+          res.json({success: false, message: `${err}`});
         }
       } 
     )
@@ -135,7 +135,7 @@ const newAtm = async (req, res) => {
   } 
   catch (err) {
     console.error(err);
-    res.send("Error " + err);
+    res.json({success: false, message: `${err}`});
   }
 }
 
