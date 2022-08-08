@@ -3,6 +3,7 @@ import cors from 'cors'
 import {router as atm} from './app/routes/route-atm.js';
 import {router as auth} from './app/routes/route-auth.js';
 import { getMembers } from "./app/controllers/cnt-atm.js";
+import { Logger } from "winston";
 
 const express = Express
 const app = express();
@@ -22,7 +23,8 @@ app.use('/auth', auth)
 
 app.get('/members', getMembers);
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  // console.log(`Server is running on port ${PORT}.`);
+  logger.info("Server started successfully", { port: port, environment: process.env.NODE_ENV });
 });
