@@ -3,7 +3,7 @@ import cors from 'cors'
 import {router as atm} from './app/routes/route-atm.js';
 import {router as auth} from './app/routes/route-auth.js';
 import { getMembers } from "./app/controllers/cnt-atm.js";
-import { Logger } from "winston";
+import { logger } from "./app/logger.js";
 
 const express = Express
 const app = express();
