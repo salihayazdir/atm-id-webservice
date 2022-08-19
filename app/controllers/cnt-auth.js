@@ -79,7 +79,7 @@ const postLogin = async (req, res) => {
 
 const makeToken = (data) => {
   const expirationDate = new Date();
-  expirationDate.setMonth(new Date().getSeconds() + 3600);
+  expirationDate.setMinutes(new Date().getMinutes() + 5);
   return jwt.sign({ ...data, expirationDate }, process.env.JWT_SECRET_KEY);
 };
 
