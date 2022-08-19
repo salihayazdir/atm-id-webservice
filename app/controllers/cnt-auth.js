@@ -105,6 +105,11 @@ const postToken = async (req, res) => {
 
       const token = makeToken({ ...user, });
 
+      // res.cookie("access_token2", token, {
+      //   secure: process.env.NODE_ENV !== "development",
+      //   httpOnly: true
+      // });
+
       return res.json({
         success: true,
         message: 'Kod doğrulandı.Token Oluşturuldu.',
@@ -145,7 +150,11 @@ const validateToken = (req, res, next) => {
 };
 
 const postAccount = async (req, res) => {
-  res.json({success: true});
+  const userData = res.locals.data
+  res.json({
+    success: true,
+    user: {...userData}
+  });
 }
 
 export {
